@@ -1,13 +1,13 @@
 //
-//  UITests_Performance.swift
-//  UITests_Performance
+//  UITestsPerformance.swift
+//  UITestsPerformance
 //
 //  Created by Sun on 02/08/2022.
 //
 
 import XCTest
 
-class UITests_Performance: XCTestCase {
+class UITestsPerformance: XCTestCase {
     
     let app = XCUIApplication()
     

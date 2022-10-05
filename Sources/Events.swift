@@ -11,9 +11,6 @@ import UIKit
 @available(iOSApplicationExtension, unavailable)
 extension MobioSDK {
     
-    public func screen<P: Codable>(screenTitle: String, category: String? = nil, properties: P?) {
-    }
-    
     /// Track scroll view.
     ///
     /// ```

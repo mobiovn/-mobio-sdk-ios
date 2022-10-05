@@ -8,6 +8,7 @@
 import Foundation
 
 struct PopupBuilderEventData: Codable {
-    let key, name: String
+    let key: String
+    let name: String
     let fields: [PopupBuilderField]
 }

@@ -1,5 +1,5 @@
 //
-//  iOSLifecycleMonitor.swift
+//  IOSLifecycleMonitor.swift
 //
 //  Created by LinhNobi on 27/08/2021.
 //
@@ -8,7 +8,7 @@ import Foundation
 import UIKit
 
 @available(iOSApplicationExtension, unavailable)
-class iOSLifecycleMonitor {
+class IOSLifecycleMonitor {
     
     @available(iOSApplicationExtension, unavailable)
     private var application = UIApplication.shared
@@ -25,6 +25,7 @@ class iOSLifecycleMonitor {
     private var event: Event!
     lazy var observerBackend = ObserverBackend()
     let viewModel = iOSLifecycleMonitorViewModel()
+    let permissionManager = PermissionManager(listPermissionCase: [.notification])
     
     init() {
         setupObserverBackend()
@@ -43,36 +44,20 @@ class iOSLifecycleMonitor {
         switch (notification.name) {
         case UIApplication.didFinishLaunchingNotification:
             viewModel.didFinishLaunching()
+            permissionManager.checkStatusListPermission()
         case UIApplication.willTerminateNotification, UIApplication.didEnterBackgroundNotification:
-            setupGoldTime()
+            terminateAction()
             DBManager.shared.save()
+        case UIApplication.willEnterForegroundNotification:
+            permissionManager.reload()
         default:
             break
         }
     }
-    
-    private func setupGoldTime() {
-        let startTimeOne = Time(hour: 15, minute: 8)
-        let endTimeOne = Time(hour: 15, minute: 30)
-        let goldTimeOne = GoldTime(startTime: startTimeOne, endTime: endTimeOne)
-        
-        let startTimeTwo = Time(hour: 14, minute: 45)
-        let endTimeTwo = Time(hour: 17, minute: 30)
-        let goldTimeTwo = GoldTime(startTime: startTimeTwo, endTime: endTimeTwo)
-        
-        let goldTimeArray = [goldTimeOne, goldTimeTwo]
-        
-        goldTimeArray.forEach { goldTime in
-            if goldTime.isGoldTime() {
-                return
-            }
-        }
-        terminateAction()
-    }
 }
 
 @available(iOSApplicationExtension, unavailable)
-extension iOSLifecycleMonitor {
+extension IOSLifecycleMonitor {
     
     private func terminateAction() {
         if event == nil {

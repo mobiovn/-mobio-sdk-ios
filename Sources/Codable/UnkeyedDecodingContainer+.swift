@@ -11,10 +11,8 @@ extension UnkeyedDecodingContainer {
     
     mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
         var array: [Any] = []
-        while isAtEnd == false {
-            if try decodeNil() {
-                continue
-            } else if let value = try? decode(Bool.self) {
+        while !isAtEnd {
+            if let value = try? decode(Bool.self) {
                 array.append(value)
             } else if let value = try? decode(Double.self) {
                 array.append(value)

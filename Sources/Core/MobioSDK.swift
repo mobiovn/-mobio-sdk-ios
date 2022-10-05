@@ -13,13 +13,13 @@ import UserNotifications
     
     // MARK: - Define
     struct Constant {
-        static let version = "1.0.0"
+        static let version = "1.0"
     }
     public typealias Dictionary = [String : Any]
     
     // MARK: - Property
     public static let shared = MobioSDK()
-    var iOSlife = iOSLifecycleMonitor()
+    var iOSlife = IOSLifecycleMonitor()
     let trackingManager = TrackingManager()
     let screenSettingManager = ScreenSettingManager()
     let mobioRemoteNotification = MobioRemoteNotification()
@@ -40,12 +40,10 @@ import UserNotifications
     /// In example.
     ///
     ///     let config = Configuration()
-    ///                 .setMerchantID(value: "9cd9e0ce-12bf-492a-a81b-7aeef078b09f")
-    ///                 .setToken("f5e27185-b53d-4aee-a9b7-e0579c24d29d")
-    ///     analytics.bindConfiguration(configuration: config)
+    ///     analytics.bindConfig(configuration: config)
     ///
     /// - Parameter configuration: configuration object.
-    public func bindConfiguration(configuration: Configuration) {
+    public func bindConfig(_ configuration: Configuration) {
         self.configuration = configuration
         self.configuration.delegate = self
     }
@@ -65,9 +63,8 @@ import UserNotifications
     /// - Parameter deviceToken: The device token string.
     public func send(deviceToken: String) {
         let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] (granted, error) in
-            guard let self = self else { return }
-            if granted {
+        center.getNotificationSettings { (notificationSettings) in
+            if notificationSettings.authorizationStatus == .authorized {
                 self.notificationRepository.sendNotificationData(permission: "granted", token: deviceToken)
             }
         }

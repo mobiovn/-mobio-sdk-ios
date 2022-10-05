@@ -9,7 +9,7 @@ import Foundation
 
 @available(iOSApplicationExtension, unavailable)
 protocol TrackingRepositoryType {
-    func getTrackingData(event: String, properties: MobioSDK.Dictionary, type: TrackType)
+    func getTrackingData(event: BaseEventKey, properties: MobioSDK.Dictionary)
 }
 
 @available(iOSApplicationExtension, unavailable)
@@ -21,10 +21,13 @@ final class TrackingRepository: ServiceBaseRepository {
 @available(iOSApplicationExtension, unavailable)
 extension TrackingRepository: TrackingRepositoryType {
     
-    func getTrackingData(event: String, properties: MobioSDK.Dictionary, type: TrackType = .default) {
-        let input = TrackingRequest(event: event, properties: properties, type: type.rawValue)
+    func getTrackingData(event: BaseEventKey, properties: MobioSDK.Dictionary) {
+        let input = TrackingRequest(event: event.keyName, properties: properties)
         let analytics = MobioSDK.shared
-        if analytics.configuration.trackable == false {
+        if analytics.configuration.dontTrackBaseEvent.contains(event) {
+            return
+        }
+        if !analytics.configuration.canSendDataBackToEnd {
             mergeTrackData(input: input)
         } else {
             api.request(input: input) { [weak self] (object: TrackingResponse?, error) in

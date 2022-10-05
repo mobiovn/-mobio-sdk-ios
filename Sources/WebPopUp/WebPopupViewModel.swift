@@ -147,8 +147,8 @@ class WebPopupViewModel: NSObject, WebPopupViewModelType {
     
     private func getViewControllerName(screenName: String) {
         let configScreenArray = MobioSDK.shared.getConfigScreen()
-       let screenSetting = configScreenArray.first { screenSetting in
-           screenSetting.title == screenName
+        let screenSetting = configScreenArray.first { screenSetting in
+            screenSetting.title == screenName
         }
         if let controllerName = screenSetting?.controllerName {
             navigator.goto(screen: controllerName)
@@ -175,18 +175,13 @@ extension WebPopupViewModel: ScriptMessageHandlerDelegate {
 extension WebPopupViewModel: WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView,
-                        didStartProvisionalNavigation navigation: WKNavigation!) {
-    }
-    
-    public func webView(_ webView: WKWebView,
                         didFinish navigation: WKNavigation!) {
         guard let data = remoteNotificationData.data else { return }
         let profileInfo = data.profileInfo
         var description = profileInfo.description
         description = description.replacingOccurrences(of: "[", with: "{")
         description = description.replacingOccurrences(of: "]", with: "}")
-        webview.evaluateJavaScript("showPopup('\(data)')") { (any, error) in
-        }
+        webview.evaluateJavaScript("showPopup('\(data)')")
     }
 }
 

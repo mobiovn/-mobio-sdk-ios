@@ -1,14 +1,14 @@
 //
-//  MobioSDKSwiftTests.swift
-//  MobioSDKSwiftTests
+//  MobioSDKTests.swift
+//  MobioSDKTests
 //
 //  Created by Sun on 06/12/2021.
 //
 
 import XCTest
-@testable import MobioSDKSwift
+@testable import MobioSDK
 
-class MobioSDKSwiftTests: XCTestCase {
+class MobioSDKTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

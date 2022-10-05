@@ -8,9 +8,12 @@
 import Foundation
 
 struct DataResponse: Codable {
-    let uID, dID, tID: String?
-    let deviceID, profileID: String?
-
+    let uID: String?
+    let dID: String?
+    let tID: String?
+    let deviceID: String?
+    let profileID: String?
+    
     enum CodingKeys: String, CodingKey {
         case uID = "u_id"
         case dID = "d_id"

@@ -171,8 +171,8 @@ public extension Reachability {
             copyDescription: { (info: UnsafeRawPointer) -> Unmanaged<CFString> in
                 let unmanagedWeakifiedReachability = Unmanaged<ReachabilityWeakifier>.fromOpaque(info)
                 let weakifiedReachability = unmanagedWeakifiedReachability.takeUnretainedValue()
-                let description = weakifiedReachability.reachability?.description ?? "nil"
-                return Unmanaged.passRetained(description as CFString)
+                let reachabilityDescription = weakifiedReachability.reachability?.description ?? "nil"
+                return Unmanaged.passRetained(reachabilityDescription as CFString)
             }
         )
         
@@ -253,23 +253,21 @@ extension SCNetworkReachabilityFlags {
 #if targetEnvironment(simulator)
         return .wifi
 #else
-        var connection = Connection.unavailable
+        var connectionStatus = Connection.unavailable
         
         if !isConnectionRequiredFlagSet {
-            connection = .wifi
+            connectionStatus = .wifi
         }
         
-        if isConnectionOnTrafficOrDemandFlagSet {
-            if !isInterventionRequiredFlagSet {
-                connection = .wifi
-            }
+        if isConnectionOnTrafficOrDemandFlagSet && !isInterventionRequiredFlagSet {
+            connectionStatus = .wifi
         }
         
         if isOnWWANFlagSet {
-            connection = .cellular
+            connectionStatus = .cellular
         }
         
-        return connection
+        return connectionStatus
 #endif
     }
     
@@ -312,17 +310,17 @@ extension SCNetworkReachabilityFlags {
     }
     
     var description: String {
-        let W = isOnWWANFlagSet ? "W" : "-"
-        let R = isReachableFlagSet ? "R" : "-"
-        let c = isConnectionRequiredFlagSet ? "c" : "-"
-        let t = isTransientConnectionFlagSet ? "t" : "-"
-        let i = isInterventionRequiredFlagSet ? "i" : "-"
-        let C = isConnectionOnTrafficFlagSet ? "C" : "-"
-        let D = isConnectionOnDemandFlagSet ? "D" : "-"
-        let l = isLocalAddressFlagSet ? "l" : "-"
-        let d = isDirectFlagSet ? "d" : "-"
+        let wwan = isOnWWANFlagSet ? "W" : "-"
+        let reachable = isReachableFlagSet ? "R" : "-"
+        let connectionRequired = isConnectionRequiredFlagSet ? "c" : "-"
+        let transient = isTransientConnectionFlagSet ? "t" : "-"
+        let intervention = isInterventionRequiredFlagSet ? "i" : "-"
+        let connectionTraffic = isConnectionOnTrafficFlagSet ? "C" : "-"
+        let demand = isConnectionOnDemandFlagSet ? "D" : "-"
+        let local = isLocalAddressFlagSet ? "l" : "-"
+        let direct = isDirectFlagSet ? "d" : "-"
         
-        return "\(W)\(R) \(c)\(t)\(i)\(C)\(D)\(l)\(d)"
+        return "\(wwan)\(reachable) \(connectionRequired)\(transient)\(intervention)\(connectionTraffic)\(demand)\(local)\(direct)"
     }
 }
 

@@ -17,6 +17,7 @@ class FailAPI: NSManagedObject {
     @NSManaged public var params: [String: Any]
     @NSManaged public var type: String
     
+    @discardableResult
     convenience init(urlString: String, event: String, params: [String: Any], type: String) {
         self.init(context: DBManager.shared.viewContext)
         self.urlString = urlString

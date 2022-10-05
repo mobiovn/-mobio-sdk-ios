@@ -14,6 +14,11 @@ protocol MobioNotificationServiceExtensionType {
 
 public class MobioNotificationServiceExtension: MobioNotificationServiceExtensionType {
     
+    struct Constant {
+        static let mediaUrlKey = "ct_mediaUrl"
+        static let mediaTypeKey = "ct_mediaType"
+    }
+    
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
     
@@ -24,11 +29,9 @@ public class MobioNotificationServiceExtension: MobioNotificationServiceExtensio
         
         let userInfo = request.content.userInfo
         
-        let mediaUrlKey = "ct_mediaUrl"
-        let mediaTypeKey = "ct_mediaType"
         
-        let mediaUrl = userInfo[mediaUrlKey] as? String
-        let mediaType = userInfo[mediaTypeKey] as? String
+        let mediaUrl = userInfo[Constant.mediaUrlKey] as? String
+        let mediaType = userInfo[Constant.mediaTypeKey] as? String
         
         loadAttachment(forUrlString: mediaUrl, withType: mediaType) { [self] attachment in
             if let attachment = attachment {
@@ -48,8 +51,7 @@ public class MobioNotificationServiceExtension: MobioNotificationServiceExtensio
         let session = URLSession(configuration: URLSessionConfiguration.default)
         if let attachmentURL = attachmentURL {
             session.downloadTask(with: attachmentURL) { [self] temporaryFileLocation, response, error in
-                if let error = error {
-                } else {
+                if error == nil {
                     let fileExt = fileExtension(forMediaType: mediaType, mimeType: response?.mimeType)
                     let fileManager = FileManager.default
                     let localURL = URL(fileURLWithPath: (temporaryFileLocation?.path ?? "") + fileExt)

@@ -17,9 +17,9 @@ public protocol MyLocalNotificationType {
 public class MyLocalNotification: NSObject {
     
     private var center: UNUserNotificationCenter {
-        let center = UNUserNotificationCenter.current()
-        center.delegate = self
-        return center
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.delegate = self
+        return notificationCenter
     }
     lazy var notificationAction = NotificationAction(center: center)
     var popupManager = PopupManager.shared
@@ -78,14 +78,12 @@ extension MyLocalNotification: MyLocalNotificationType {
 
     public func pushNotif(with content: NotificationContent, after second: TimeInterval) {
         let request = createRequest(content: content, second: second)
-        center.add(request) { (error) in
-        }
+        center.add(request)
     }
     
     public func pushNotif(with content: NotificationContent, component: DateComponents) {
         let request = createRequest(content: content, component: component)
-        center.add(request) { (error) in
-        }
+        center.add(request)
     }
 }
 
@@ -132,7 +130,7 @@ extension MyLocalNotification: PushRepositoryDelegate {
 @available(iOSApplicationExtension, unavailable)
 extension MyLocalNotification: Trackable {
     
-    func track(name: String, properties: MobioSDK.Dictionary) {
+    func track(name: BaseEventKey, properties: MobioSDK.Dictionary) {
         trackingManager.track(name: name, properties: properties)
     }
 }

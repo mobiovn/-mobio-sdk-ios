@@ -11,7 +11,8 @@ import CoreData
 @available(iOSApplicationExtension, unavailable)
 @objc(Push)
 public class Push: NSManagedObject {
-    @NSManaged public var type, time: String
+    @NSManaged public var type: String
+    @NSManaged public var time: String
     @NSManaged public var expire: Int
     @NSManaged public var nodeID: String
     @NSManaged public var notiResponse: NotiResponse
@@ -65,7 +66,7 @@ extension Push: Encodable {
 @available(iOSApplicationExtension, unavailable)
 extension Push {
     
-    static func <(lhs: Push, rhs: Push) -> Bool {
+    static func < (lhs: Push, rhs: Push) -> Bool {
         lhs.expire < rhs.expire
     }
 }

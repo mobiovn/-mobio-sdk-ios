@@ -7,22 +7,16 @@
 
 import Foundation
 
-public enum BaseUrlType {
-    case app
-    case uat
-    case test
-    case custom(String)
+@objcMembers public class BaseUrlType: NSObject {
     
-    var urlString: String {
-        switch self {
-        case .custom(let string):
-            return string
-        case .app:
-            return "https://api.mobio.vn/"
-        case .uat:
-            return "https://api-uat.mobio.vn/"
-        case .test:
-            return "https://api-test1.mobio.vn/"
-        }
+    var urlString: String = ""
+    
+    public init(urlString: String) {
+        self.urlString = urlString
     }
+    
+    public static let app = BaseUrlType(urlString: "https://api.mobio.vn/")
+    public static let uat = BaseUrlType(urlString: "https://api-uat.mobio.vn/")
+    public static let test = BaseUrlType(urlString: "https://api-test1.mobio.vn/")
+    
 }

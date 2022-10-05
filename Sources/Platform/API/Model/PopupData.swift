@@ -11,9 +11,15 @@ import Foundation
 struct PopupData: Codable {
     let profileID: String
     let journeyID: String?
-    let nodeID, masterCampaignID: String
-    let code, popupURL, sendID, popupType: String
-    let merchantID, popupID, instanceID: String
+    let nodeID: String
+    let masterCampaignID: String
+    let code: String
+    let popupURL: String
+    let sendID: String
+    let popupType: String
+    let merchantID: String
+    let popupID: String
+    let instanceID: String
     let profileInfo: MobioSDK.Dictionary
     let popupPosition: String?
     

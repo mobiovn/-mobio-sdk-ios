@@ -6,7 +6,8 @@
 //
 
 import Foundation
- 
+
 struct Size: Codable {
-    let widthMobile, heightMobile: Int
+    let widthMobile: Int
+    let heightMobile: Int
 }

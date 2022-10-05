@@ -18,17 +18,6 @@ import UIKit
     func afterLayingOutSubviews(_ viewController: UIViewController)
 }
 
-// MARK: - Default implementation
-extension ViewControllerLifeCycleBehavior {
-    func afterLoading(_ viewController: UIViewController) {}
-    func beforeAppearing(_ viewController: UIViewController) {}
-    func afterAppearing(_ viewController: UIViewController) {}
-    func beforeDisappearing(_ viewController: UIViewController) {}
-    func afterDisappearing(_ viewController: UIViewController) {}
-    func beforeLayingOutSubviews(_ viewController: UIViewController) {}
-    func afterLayingOutSubviews(_ viewController: UIViewController) {}
-}
-
 // MARK: - UIViewController + Lifecycle Behavior
 @available(iOSApplicationExtension, unavailable)
 @objc public extension UIViewController {
@@ -69,8 +58,7 @@ extension ViewControllerLifeCycleBehavior {
             self.timer = nil
             self.countTime = 0
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
-            
-            screenStart(eventKey: "sdk_mobile_test_screen_start_in_app")
+            screenStart(eventKey: BaseEventKey.screenStart)
         }
         
         public override func viewWillDisappear(_ animated: Bool) {
@@ -80,6 +68,7 @@ extension ViewControllerLifeCycleBehavior {
             let screenName = UserDefaultManager.getString(forKey: .screenCurrentView)
             UserDefaultManager.set(value: screenName, forKey: .screenExitView)
             UserDefaults.standard.synchronize()
+            screenEnd(eventKey: BaseEventKey.screenEnd)
         }
         
         public override func viewDidDisappear(_ animated: Bool) {
@@ -159,18 +148,15 @@ extension ViewControllerLifeCycleBehavior {
                     ]
                     // MARK: - To do: send event traits
 //                    NotificationCenter.default.post(name: .sendEvent, object: traits)
-                    trackingRepository.getTrackingData(event: "sdk_mobile_time_visit_app", properties: traits, type: .timeVisit)
+                    trackingRepository.getTrackingData(event: BaseEventKey.timeVisit, properties: traits)
                 }
                 if countTime == timeConfig[timeConfig.count - 1] {
                     self.timer?.invalidate()
                 }
-                //            }
-                if countTime > timeConfig[timeConfig.count - 1] {
-                }
             }
         }
         
-        private func screenStart(eventKey: String) {
+        private func screenStart(eventKey: BaseEventKey) {
             let configScreens = screenSettingManager.getConfigScreen()
             
             if configScreens.count == 0 {
@@ -188,18 +174,17 @@ extension ViewControllerLifeCycleBehavior {
             let properties: MobioSDK.Dictionary = [
                 "screen_name": screenView[0].title
             ]
-            trackingRepository.getTrackingData(event: eventKey, properties: properties, type: .view)
+            trackingRepository.getTrackingData(event: eventKey, properties: properties)
             
         }
         
-        private func screenEnd(eventKey: String) {
-            
+        private func screenEnd(eventKey: BaseEventKey) {
             let screenName = UserDefaultManager.getString(forKey: .screenCurrentView)
             let properties: MobioSDK.Dictionary = [
                 "time": Date().iso8601(),
-                "screen_name": screenName ,
+                "screen_name": screenName,
             ]
-            trackingRepository.getTrackingData(event: eventKey, properties: properties, type: .default)
+            trackingRepository.getTrackingData(event: eventKey, properties: properties)
         }
     }
     

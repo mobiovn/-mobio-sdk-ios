@@ -9,14 +9,16 @@ import UIKit
 import UserNotificationsUI
 
 final class RatingViewController: UIViewController {
-
+    
     // MARK: - Outlet
-    @IBOutlet private var starButtonArray: [UIButton]!
-    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var ratingStackView: UIStackView!
+
     
     // MARK: - Property
     var data: NotificationContentDataType!
-    
+    var ratingButtonArray = [UIButton]()
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,17 +52,28 @@ final class RatingViewController: UIViewController {
     }
     
     private func setupButtonArray(emptyStar: UIImage?, fullStar: UIImage?) {
-        for index in 0..<starButtonArray.count {
-            let button = starButtonArray[index]
+        guard let ratingData = data as? Rating else { return }
+        for index in 0..<ratingData.ratingNumber {
+            let button = UIButton()
             button.setImage(emptyStar, for: .normal)
             button.setImage(fullStar, for: .selected)
             button.tintColor = .clear
             button.tag = index
+            button.addTarget(self, action: #selector(ratingAction(_:)), for: .touchUpInside)
+            ratingButtonArray.append(button)
+        }
+        setupVoteStackView(with: ratingButtonArray)
+    }
+    
+    private func setupVoteStackView(with ratingButtonArray: [UIButton]) {
+        ratingStackView.translatesAutoresizingMaskIntoConstraints = false
+        ratingButtonArray.forEach { button in
+            ratingStackView.addArrangedSubview(button)
         }
     }
     
-    func downloadImage(from URLString: String, complete: @escaping (Data) -> Void) {
-        guard let url = URL(string: URLString) else { return }
+    func downloadImage(from urlString: String, complete: @escaping (Data) -> Void) {
+        guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let data = data {
                 DispatchQueue.main.async {
@@ -71,17 +84,17 @@ final class RatingViewController: UIViewController {
     }
     
     // MARK: - Action
-    @IBAction func ratingAction(_ sender: UIButton) {
+    @objc func ratingAction(_ sender: UIButton) {
         changeStateButton(button: sender)
     }
     
     private func changeStateButton(button: UIButton) {
         for index in 0...button.tag {
-            let button = starButtonArray[index]
+            let button = ratingButtonArray[index]
             changeStateToSelected(button)
         }
-        for index in button.tag+1..<starButtonArray.count {
-            let button = starButtonArray[index]
+        for index in button.tag+1..<ratingButtonArray.count {
+            let button = ratingButtonArray[index]
             changeStateToNormal(button)
         }
     }

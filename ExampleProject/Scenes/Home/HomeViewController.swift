@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import MobioSDKSwift
+import MobioSDK
 
 final class HomeViewController: UIViewController {
     
@@ -43,21 +43,22 @@ final class HomeViewController: UIViewController {
     }
     
     @IBAction func makeFailApiAction(_ sender: Any) {
-        let failAPI = FailAPI(urlString: "url string 1", event: "event 1", params: [String : Any](), type: "type 1")
+        APIRecallManager.shared.fetchFailApi()
     }
     
     @IBAction func trackAction(_ sender: Any) {
         let properties = ["screenName": "Home"]
-        analytics.track(name: "track_button", properties: properties)
+        analytics.track(name: .clickButton, properties: properties)
     }
     
     @IBAction func configAction(_ sender: Any) {
         let config = Configuration()
             .setupMerchantID(value: "9cd9e0ce-12bf-492a-a81b-7aeef078b09f")
             .setupToken("f5e27185-b53d-4aee-a9b7-e0579c24d29d")
-            .setupSDK(code: "m-ios-test-1", source: "MobioBank")
-            .setupEnviroment(baseUrlType: .test)
-        analytics.bindConfiguration(configuration: config)
+            .setupCode(code: "m-code")
+            .setupSource(source: "m-source")
+            .setupApi(baseUrlType: .test)
+        analytics.bindConfig(config)
     }
     
     @IBAction func screenSettingAction(_ sender: Any) {

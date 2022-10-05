@@ -8,7 +8,9 @@
 import Foundation
 
 struct BigPicture: NotificationContentDataType {
-    let imageURL, title, body: String
+    let imageURL: String
+    let title: String
+    let body: String
     
     enum CodingKeys: String, CodingKey {
         case imageURL = "image_url"

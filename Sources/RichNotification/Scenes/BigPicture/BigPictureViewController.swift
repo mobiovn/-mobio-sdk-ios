@@ -32,8 +32,8 @@ final class BigPictureViewController: UIViewController {
         downloadImage(from: bigPictureData.imageURL)
     }
     
-    private func downloadImage(from URLString: String) {
-        guard let url = URL(string: URLString) else { return }
+    private func downloadImage(from urlString: String) {
+        guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             guard let self = self else { return }
             if let data = data {

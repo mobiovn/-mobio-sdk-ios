@@ -17,9 +17,7 @@ public struct APIRecallManager {
     let apiRecallQueue = DispatchQueue(label: "ApiRecallQueue", attributes: .concurrent)
     let semaphore = DispatchSemaphore(value: 1)
     let group = DispatchGroup()
-    
-    private init() { }
-    
+        
     public func fetchFailApi() {
         apiRecallQueue.async(flags: .barrier) {
             semaphore.wait()
@@ -74,9 +72,5 @@ extension APIRecallManager: InternetManagerDelegate {
     
     func haveInternet() {
         fetchFailApi()
-    }
-    
-    func dontHaveInternet() {
-        // MARK: - TODO: do something
     }
 }

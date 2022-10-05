@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import MobioSDKSwift
+import MobioSDK
 
 @main
 class AppDelegate: UIResponder {
@@ -16,12 +16,10 @@ class AppDelegate: UIResponder {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let config = Configuration()
-            .setupMerchantID(value: "9cd9e0ce-12bf-492a-a81b-7aeef078b09f")
-            .setupToken("f5e27185-b53d-4aee-a9b7-e0579c24d29d")
-            .setupSDK(code: "m-ios-test-1", source: "MobioBank")
-            .setupEnviroment(baseUrlType: .test)
-            .setupTrackable(true)
-        analytics.bindConfiguration(configuration: config)
+            .setupCode(code: "m-code")
+            .setupSource(source: "m-source")
+            .setupApi(baseUrlType: .test)
+        analytics.bindConfig(config)
         analytics.registerForPushNotifications()
         toMain()
         return true

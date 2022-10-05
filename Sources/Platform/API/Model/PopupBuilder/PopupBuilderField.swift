@@ -9,5 +9,7 @@ import Foundation
 
 struct PopupBuilderField: Codable {
     let value: Int
-    let key, property, name: String
+    let key: String
+    let property: String
+    let name: String
 }

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import MobioSDKSwift
+import MobioSDK
 
 class FavoriteViewController: UIViewController {
 

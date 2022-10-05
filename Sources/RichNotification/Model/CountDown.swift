@@ -8,7 +8,9 @@
 import Foundation
 
 struct CountDown: NotificationContentDataType {
-    let imageURL, title, body: String
+    let imageURL: String
+    let title: String
+    let body: String
     let time: TimeInterval
     var endDate: Date {
         return Date(timeIntervalSince1970: time)

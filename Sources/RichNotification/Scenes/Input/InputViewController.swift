@@ -30,8 +30,8 @@ final class InputViewController: UIViewController {
         downloadImage(from: inputData.imageURL)
     }
     
-    func downloadImage(from URLString: String) {
-        guard let url = URL(string: URLString) else { return }
+    func downloadImage(from urlString: String) {
+        guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             guard let self = self else { return }
             if let data = data {
@@ -40,9 +40,6 @@ final class InputViewController: UIViewController {
                 }
             }
         }.resume()
-    }
-    
-    private func handleMessage(data: String) {
     }
 }
 
@@ -54,17 +51,14 @@ extension InputViewController: NotificationContentViewControllerType {
     }
     
     func handleAction(response: UNNotificationResponse) -> UNNotificationContentExtensionResponseOption {
-        if let inputResponse = response as? UNTextInputNotificationResponse {
-            handleMessage(data: inputResponse.userText)
-        }
         return .dismiss
     }
     
     func configureUserNotificationsCenter() {
-        let backAction = UNTextInputNotificationAction(identifier: NotificationActionIdentifier.replyAction.rawValue, title: "Reply", options: [])
-        let nextAction = UNNotificationAction(identifier: NotificationActionIdentifier.closeAction.rawValue, title: "Close", options: [])
+        let replyAction = UNTextInputNotificationAction(identifier: NotificationActionIdentifier.replyAction.rawValue, title: "Reply", options: [])
+        let closeAction = UNNotificationAction(identifier: NotificationActionIdentifier.closeAction.rawValue, title: "Close", options: [])
         let tutorialCategory = UNNotificationCategory(identifier: "myNotificationCategory",
-                                                      actions: [backAction, nextAction],
+                                                      actions: [replyAction, closeAction],
                                                       intentIdentifiers: [],
                                                       options: [])
         let center = UNUserNotificationCenter.current()

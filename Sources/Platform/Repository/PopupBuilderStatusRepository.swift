@@ -13,12 +13,7 @@ protocol PopupBuilderStatusRepositoryType {
 }
 
 @available(iOSApplicationExtension, unavailable)
-final class PopupBuilderStatusRepository: ServiceBaseRepository {
-    
-}
-
-@available(iOSApplicationExtension, unavailable)
-extension PopupBuilderStatusRepository: PopupBuilderStatusRepositoryType {
+final class PopupBuilderStatusRepository: ServiceBaseRepository, PopupBuilderStatusRepositoryType {
     
     func sendPopupBuilderStatus(popupData: PopupData, statusCase: WebStatusCase) {
         guard let api = api else { return }

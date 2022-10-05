@@ -11,7 +11,8 @@ class ScrollValue: Value {
     
     var screenName: String
     var percentageScroll: Int
-    var direction, unit: String
+    var direction: String
+    let unit: String
     
     init(screenName: String, percentageScroll: Int, direction: String, unit: String) {
         self.screenName = screenName

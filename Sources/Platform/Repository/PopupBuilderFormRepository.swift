@@ -13,11 +13,7 @@ protocol PopupBuilderFormRepositoryType {
 }
 
 @available(iOSApplicationExtension, unavailable)
-final class PopupBuilderFormRepository: ServiceBaseRepository {
-}
-
-@available(iOSApplicationExtension, unavailable)
-extension PopupBuilderFormRepository: PopupBuilderFormRepositoryType {
+final class PopupBuilderFormRepository: ServiceBaseRepository, PopupBuilderFormRepositoryType {
     
     func sendFormData(popupData: PopupData, actionData: PopupBuilderActionData, submitFormCase: SubmitFormCase) {
         guard let api = api else { return }

@@ -11,7 +11,10 @@ import CoreData
 @objc(NotiResponse)
 public class NotiResponse: NSManagedObject {
     @NSManaged public var type: Int32
-    @NSManaged public var sourceScreen, desScreen, title, content: String
+    @NSManaged public var sourceScreen: String
+    @NSManaged public var desScreen: String
+    @NSManaged public var title: String
+    @NSManaged public var content: String
     @NSManaged public var data: String
 
     public required convenience init(from decoder: Decoder) throws {

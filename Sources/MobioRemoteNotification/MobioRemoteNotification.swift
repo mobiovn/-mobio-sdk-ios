@@ -20,10 +20,45 @@ protocol MobioRemoteNotificationType {
 @available(iOSApplicationExtension, unavailable)
 final class MobioRemoteNotification: NSObject {
     
+    // MARK: - Constant
+    struct Constant {
+        static let categoryIdentifier = "scheduleCategory"
+    }
+    
+    enum ActionIdentifier: String {
+        case schedule
+    }
+    
     // MARK: - Property
     let center = UNUserNotificationCenter.current()
     var viewModel: RemoteNotificationViewModel!
     let notificationRepository = NotificationRepository(api: HTTPClient.shared)
+    
+    override init() {
+        super.init()
+        setupNotificationAction()
+    }
+    
+    private func setupNotificationAction() {
+        let scheduleAction = UNNotificationAction(identifier: ActionIdentifier.schedule.rawValue, title: "Schedule", options: [.destructive])
+        let actionCategory = UNNotificationCategory(identifier: Constant.categoryIdentifier, actions: [scheduleAction], intentIdentifiers: [], options: .customDismissAction)
+        center.setNotificationCategories([actionCategory])
+    }
+    
+    private func handleNotificationAction(actionIdentifier: ActionIdentifier?, content: UNNotificationContent) {
+        switch actionIdentifier {
+        case .schedule:
+            scheduleRemoteNotification(content: content)
+        case .none:
+            break
+        }
+    }
+    
+    private func scheduleRemoteNotification(content: UNNotificationContent) {
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        center.add(request)
+    }
 }
 
 @available(iOSApplicationExtension, unavailable)
@@ -50,7 +85,7 @@ extension MobioRemoteNotification: MobioRemoteNotificationType {
                 UIApplication.shared.registerForRemoteNotifications()
             }
         } else {
-            notificationRepository.sendNotificationData(permission: "denied", token: nil)
+            notificationRepository.sendNotificationData(permission: "denied", token: "")
         }
     }
     
@@ -75,7 +110,7 @@ extension MobioRemoteNotification: MobioRemoteNotificationType {
                 completionHandler([.alert, .badge, .sound])
             }
         }
-        MobioSDK.shared.configuration.setupTrackable(remoteNotificationData.alert?.status)
+        MobioSDK.shared.configuration.setupCanSendDataBackToEnd(remoteNotificationData.alert?.status)
     }
     
     func notificationDidReceive(with response: UNNotificationResponse) {
@@ -88,6 +123,7 @@ extension MobioRemoteNotification: MobioRemoteNotificationType {
         if state == .background || state == .inactive {
             viewModel.decideShowPopup(remoteNotificationData: remoteNotificationData)
         }
+        handleNotificationAction(actionIdentifier: ActionIdentifier(rawValue: response.actionIdentifier), content: content)
     }
 }
 

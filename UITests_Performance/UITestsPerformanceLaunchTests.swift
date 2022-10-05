@@ -1,13 +1,13 @@
 //
-//  UITests_PerformanceLaunchTests.swift
-//  UITests_Performance
+//  UITestsPerformanceLaunchTests.swift
+//  UITestsPerformance
 //
 //  Created by Sun on 02/08/2022.
 //
 
 import XCTest
 
-class UITests_PerformanceLaunchTests: XCTestCase {
+class UITestsPerformanceLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

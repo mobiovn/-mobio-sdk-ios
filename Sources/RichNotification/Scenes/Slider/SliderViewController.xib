@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SliderViewController" customModule="MobioSDK" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="At9-fp-fNo" id="SAW-UD-1rA"/>
+                <outlet property="pageControl" destination="BMW-kF-cdX" id="WqO-ot-6dR"/>
+                <outlet property="view" destination="LSj-DW-oDt" id="M4r-gn-pjy"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="LSj-DW-oDt">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="At9-fp-fNo">
+                    <rect key="frame" x="0.0" y="298" width="414" height="300"/>
+                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="300" id="IYC-Ju-bm3"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZGj-MX-C08">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <cells/>
+                </collectionView>
+                <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="BMW-kF-cdX">
+                    <rect key="frame" x="129.5" y="572" width="155" height="26"/>
+                </pageControl>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="DEo-hJ-9Sj"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="DEo-hJ-9Sj" firstAttribute="trailing" secondItem="At9-fp-fNo" secondAttribute="trailing" id="6K5-QF-ByX"/>
+                <constraint firstItem="At9-fp-fNo" firstAttribute="leading" secondItem="LSj-DW-oDt" secondAttribute="leading" id="FAl-DM-1x4"/>
+                <constraint firstItem="At9-fp-fNo" firstAttribute="centerX" secondItem="LSj-DW-oDt" secondAttribute="centerX" id="UEL-VP-kQU"/>
+                <constraint firstItem="BMW-kF-cdX" firstAttribute="bottom" secondItem="At9-fp-fNo" secondAttribute="bottom" id="Zyz-TC-Pja"/>
+                <constraint firstItem="BMW-kF-cdX" firstAttribute="centerX" secondItem="LSj-DW-oDt" secondAttribute="centerX" id="sT4-GK-r5k"/>
+                <constraint firstItem="At9-fp-fNo" firstAttribute="centerY" secondItem="LSj-DW-oDt" secondAttribute="centerY" id="uK9-OO-MjB"/>
+            </constraints>
+            <point key="canvasLocation" x="-539.13043478260875" y="187.5"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

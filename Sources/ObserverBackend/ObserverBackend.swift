@@ -108,7 +108,7 @@ extension ObserverBackend {
 
 @available(iOSApplicationExtension, unavailable)
 extension ObserverBackend: Trackable {
-    func track(name: String, properties: MobioSDK.Dictionary) {
+    func track(name: BaseEventKey, properties: MobioSDK.Dictionary) {
         trackingManager.track(name: name, properties: properties)
     }
 }

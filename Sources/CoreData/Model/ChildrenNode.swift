@@ -38,7 +38,7 @@ extension ChildrenNode: Decodable {
 
 @available(iOSApplicationExtension, unavailable)
 extension ChildrenNode {
-    static func <(lhs: ChildrenNode, rhs: ChildrenNode) -> Bool {
+    static func < (lhs: ChildrenNode, rhs: ChildrenNode) -> Bool {
         return lhs.expire < rhs.expire
     }
 }

@@ -9,11 +9,7 @@ import Foundation
 
 struct AppInfo {
     
-    static let shared = AppInfo()
-    var info = Bundle.main.infoDictionary
-    var name = ""
-    
-    init() {
-        name = info?["CFBundleDisplayName"] as? String ?? ""
-    }
+    static let mainBundle = Bundle.main
+    static let infoDictionary = mainBundle.infoDictionary
+    static let mobioSDKBundle = Bundle(identifier: "IOS.MobioSDK")
 }

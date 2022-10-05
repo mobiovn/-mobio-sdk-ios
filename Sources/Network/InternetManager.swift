@@ -10,7 +10,6 @@ import Foundation
 
 protocol InternetManagerDelegate {
     func haveInternet()
-    func dontHaveInternet()
 }
 
 struct InternetManager {
@@ -29,8 +28,6 @@ struct InternetManager {
         DispatchQueue.main.async {       
             if path.status == .satisfied {
                 delegate?.haveInternet()
-            } else {
-                delegate?.dontHaveInternet()
             }
         }
     }

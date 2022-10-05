@@ -18,7 +18,7 @@ extension KeyedDecodingContainer {
         guard contains(key) else {
             return nil
         }
-        guard try decodeNil(forKey: key) == false else {
+        guard try !decodeNil(forKey: key) else {
             return nil
         }
         return try decode(type, forKey: key)
@@ -33,7 +33,7 @@ extension KeyedDecodingContainer {
         guard contains(key) else {
             return nil
         }
-        guard try decodeNil(forKey: key) == false else {
+        guard try !decodeNil(forKey: key) else {
             return nil
         }
         return try decode(type, forKey: key)

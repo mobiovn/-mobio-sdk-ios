@@ -10,8 +10,8 @@ import UIKit
 @available(iOSApplicationExtension, unavailable)
 class TrackingRequest: ServiceBaseRequest {
     
-    required convenience init(event: String, properties: MobioSDK.Dictionary, type: String) {
-        let params = TrackingParamParser.createParam(event: event, properties: properties, type: type)
+    required convenience init(event: String, properties: MobioSDK.Dictionary) {
+        let params = TrackingParamParser.createParam(event: event, properties: properties)
         self.init(urlString: URLs.trackUrl, event: event, params: params, type: "track")
     }
 }

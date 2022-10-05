@@ -27,7 +27,7 @@ struct iOSLifecycleMonitorViewModel {
                 "version": currentVersion,
                 "build": currentBuild,
             ]
-            trackingRepository.getTrackingData(event: "sdk_mobile_test_open_first_app", properties: properties)
+            trackingRepository.getTrackingData(event: BaseEventKey.openFirst, properties: properties)
             UserDefaultManager.set(value: true, forKey: .appOpenFirts)
             UserDefaults.standard.synchronize()
         }
@@ -37,7 +37,7 @@ struct iOSLifecycleMonitorViewModel {
                 "version": currentVersion,
                 "build": currentBuild,
             ]
-            trackingRepository.getTrackingData(event: "sdk_mobile_test_installed_app", properties: properties)
+            trackingRepository.getTrackingData(event: BaseEventKey.install, properties: properties)
         }
         
         if currentBuild != previousBuild {
@@ -45,7 +45,8 @@ struct iOSLifecycleMonitorViewModel {
                 "version": currentVersion,
                 "build": currentBuild,
             ]
-            trackingRepository.getTrackingData(event: "sdk_mobile_test_open_update_app", properties: properties)
+            trackingRepository.getTrackingData(event: BaseEventKey.update, properties: properties)
+            
         }
         
         // Application Opened
@@ -53,7 +54,7 @@ struct iOSLifecycleMonitorViewModel {
             "version": currentVersion,
             "build": currentBuild,
         ]
-        trackingRepository.getTrackingData(event: "sdk_mobile_test_open_app", properties: properties)
+        trackingRepository.getTrackingData(event: BaseEventKey.openApp, properties: properties)
         UserDefaultManager.set(value: currentVersion, forKey: .versionKey)
         UserDefaultManager.set(value: currentBuild, forKey: .buildKey)
         deviceRepository.sendDeviceData()

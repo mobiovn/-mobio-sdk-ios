@@ -24,7 +24,7 @@ struct NotificationParser {
         return NotificationDetail(permission: permission, token: token)
     }
     
-    static func createParam(permission: String, token: String?) -> MobioSDK.Dictionary {
+    static func createParam(permission: String, token: String) -> MobioSDK.Dictionary {
         let sdk = createSDK()
         let device = createNotificationDevice()
         let detail = createNotificationDetail(permission: permission, token: token)

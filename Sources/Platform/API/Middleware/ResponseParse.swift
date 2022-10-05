@@ -13,10 +13,11 @@ struct ResponseParse {
         guard let data = data else {
             return [String: Any]()
         }
-        if let dictionaryResponse = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-            return dictionaryResponse
-        } else {
-            return [String: Any]()
+        if let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) {
+            if let dataDictionary = jsonData as? [String: Any] {
+                return dataDictionary
+            }
         }
+        return [String: Any]()
     }
 }

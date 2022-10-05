@@ -114,7 +114,7 @@ extension AcceptPopupViewController: XibSceneBased { }
 
 @available(iOSApplicationExtension, unavailable)
 extension AcceptPopupViewController: Trackable {
-    func track(name: String, properties: MobioSDK.Dictionary) {
+    func track(name: BaseEventKey, properties: MobioSDK.Dictionary) {
         trackingManager.track(name: name, properties: properties)
     }
 }

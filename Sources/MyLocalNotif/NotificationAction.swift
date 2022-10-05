@@ -44,8 +44,6 @@ class NotificationAction {
             setupOpenAction(response: response)
         case UNNotificationDefaultActionIdentifier:
             setupOpenAction(response: response)
-        case UNNotificationDismissActionIdentifier:
-            setupCancelAction(response: response)
         default:
             break
         }
@@ -57,10 +55,6 @@ class NotificationAction {
         let content = request.content
         let userInfo = content.userInfo
         showPopup(userInfo: userInfo)
-    }
-    
-    private func setupCancelAction(response: UNNotificationResponse) {
-        // MARK: - Todo: cancel action
     }
     
     private func showPopup(userInfo: [AnyHashable : Any]) {
@@ -75,7 +69,7 @@ class NotificationAction {
 
 @available(iOSApplicationExtension, unavailable)
 extension NotificationAction: Trackable {
-    func track(name: String, properties: MobioSDK.Dictionary) {
+    func track(name: BaseEventKey, properties: MobioSDK.Dictionary) {
         trackingManager.track(name: name, properties: properties)
     }
 }

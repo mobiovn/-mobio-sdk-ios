@@ -35,7 +35,7 @@ class FormValue: Value {
     convenience init(journey: Journey) {
         self.init(journey: journey, button: nil, tags: nil, inputFields: nil)
     }
-
+    
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         try journey = container.decode(Journey.self, forKey: .journey)

@@ -64,4 +64,8 @@ extension UIView {
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
+    
+    static var nibName: String {
+        return String(describing: self)
+    }
 }

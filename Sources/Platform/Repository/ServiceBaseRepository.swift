@@ -25,6 +25,6 @@ class ServiceBaseRepository {
 extension ServiceBaseRepository: ServiceBaseRepositoryType {
     
     func createFailApi(input: ServiceBaseRequest) {
-        let failApi = FailAPI(urlString: input.urlString, event: input.event, params: input.params, type: input.type)
+        FailAPI(urlString: input.urlString, event: input.event, params: input.params, type: input.type)
     }
 }

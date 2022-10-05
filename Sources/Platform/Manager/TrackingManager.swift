@@ -9,12 +9,12 @@ import Foundation
 
 @available(iOSApplicationExtension, unavailable)
 protocol Trackable {
-    func track(name: String, properties: MobioSDK.Dictionary)
+    func track(name: BaseEventKey, properties: MobioSDK.Dictionary)
 }
 
 @available(iOSApplicationExtension, unavailable)
 protocol Identifyable {
-    func identify(name: String, properties: MobioSDK.Dictionary)
+    func identify(name: BaseEventKey, properties: MobioSDK.Dictionary)
 }
 
 @available(iOSApplicationExtension, unavailable)
@@ -26,11 +26,11 @@ class TrackingManager {
 @available(iOSApplicationExtension, unavailable)
 extension TrackingManager: Trackable, Identifyable {
     
-    func track(name: String, properties: MobioSDK.Dictionary) {
+    func track(name: BaseEventKey, properties: MobioSDK.Dictionary) {
         trackRepository.getTrackingData(event: name, properties: properties)
     }
     
-    func identify(name: String, properties: MobioSDK.Dictionary) {
+    func identify(name: BaseEventKey, properties: MobioSDK.Dictionary) {
         trackRepository.getTrackingData(event: name, properties: properties)
     }
 }
@@ -48,7 +48,7 @@ extension MobioSDK: Trackable, Identifyable {
     ///
     /// - Parameter name: The event name.
     /// - Parameter properties: The properties contain info.
-    public func track(name: String, properties: Dictionary) {
+    public func track(name: BaseEventKey, properties: Dictionary) {
         trackingManager.track(name: name, properties: properties)
     }
     
@@ -59,11 +59,11 @@ extension MobioSDK: Trackable, Identifyable {
     ///
     ///     let properties = ["email": "devios@mobio.io",
     ///                       "name": "devios"]
-    ///     analytics.identify(name: "sdk_mobile_test_identify_app", properties: properties)
+    ///     analytics.identify(name: .identifyApp, properties: properties)
     ///
     /// - Parameter name: The event name.
     /// - Parameter properties: The properties.
-    public func identify(name: String, properties: Dictionary) {
+    public func identify(name: BaseEventKey, properties: MobioSDK.Dictionary) {
         trackingManager.track(name: name, properties: properties)
     }
 }

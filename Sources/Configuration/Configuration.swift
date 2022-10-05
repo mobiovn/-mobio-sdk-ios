@@ -7,20 +7,20 @@
 
 import Foundation
 
-@objcMembers public class Configuration {
+@objcMembers public class Configuration: NSObject {
     
-    var sdk = SDK()
-    
-    /// Setup environment: test, app,  uat
-    ///
-    /// In example.
-    ///
-    ///     analytics.baseUrlType = .test
-    public var baseUrlType = BaseUrlType.app
-    var trackable = true
+    var sdk: SDK!
+    public var baseUrlType: BaseUrlType!
+    var canSendDataBackToEnd: Bool!
     var delegate: ConfigurationDelegate?
+    var dontTrackBaseEvent: [BaseEventKey]!
 
-    public init() { }
+    public override init() {
+        sdk = SDK()
+        baseUrlType = BaseUrlType.app
+        canSendDataBackToEnd = true
+        dontTrackBaseEvent = [BaseEventKey]()
+    }
     
     /// Save merchantID
     ///
@@ -28,7 +28,7 @@ import Foundation
     /// Create a configuration.
     ///
     ///     let config = Configuration()
-    ///                  .setMerchantID(value: "9cd9e0ce-12bf-492a-a81b-7aeef078b09f")
+    ///                  .setMerchantID(value: "xxxxxxxx-aaaa")
     ///
     /// - Parameter value: merchantID string.
     public func setupMerchantID(value: String) -> Configuration {
@@ -42,7 +42,7 @@ import Foundation
     /// Create a configuration.
     ///
     ///     let config = Configuration()
-    ///                  .token(value: "9cd9e0ce-12bf-492a-a81b-7aeef078b09f")
+    ///                  .setupToken(value: "xxxxxxxx-aaaa")
     ///
     /// - Parameter value: token string.
     public func setupToken(_ value: String) -> Configuration {
@@ -50,29 +50,50 @@ import Foundation
         return self
     }
     
-    /// Set code & source for SDK object.
+    /// Set code for SDK object.
     ///
     /// In example.
     ///
-    ///     analytics.setupSDK(code: "m-ios-test-1", source: "MobioBank")
+    ///     analytics.setupCode(code: "m-code")
     ///
     /// - Parameter code: code data.
-    /// - Parameter source: source data.
-    public func setupSDK(code: String, source: String) -> Configuration {
+    public func setupCode(code: String) -> Configuration {
         sdk.code = code
+        return self
+    }
+    
+    /// Set source for SDK object.
+    ///
+    /// In example.
+    ///
+    ///     analytics.setupSource(source: "m-source")
+    ///
+    /// - Parameter source: source data.
+    public func setupSource(source: String) -> Configuration {
         sdk.source = source
         return self
     }
     
-    public func setupEnviroment(baseUrlType: BaseUrlType) -> Configuration {
+    /// Setup environment: test, app,  uat
+    ///
+    /// In example.
+    ///
+    ///     analytics.setupApi(baseUrlType: .test)
+    public func setupApi(baseUrlType: BaseUrlType) -> Configuration {
         self.baseUrlType = baseUrlType
         return self
     }
     
     @discardableResult
-    public func setupTrackable(_ value: Bool?) -> Configuration {
-        self.trackable = value ?? true
-        delegate?.trackableDidSet(value: trackable)
+    public func setupCanSendDataBackToEnd(_ value: Bool?) -> Configuration {
+        self.canSendDataBackToEnd = value ?? true
+        delegate?.trackableDidSet(value: canSendDataBackToEnd)
+        return self
+    }
+    
+    @discardableResult
+    public func setupDontTrackBaseEvent(_ array: [BaseEventKey]) -> Configuration {
+        self.dontTrackBaseEvent = array
         return self
     }
 }

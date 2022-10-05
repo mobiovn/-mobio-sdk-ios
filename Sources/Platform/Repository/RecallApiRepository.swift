@@ -18,11 +18,7 @@ protocol RecallApiRepositoryType {
 }
 
 @available(iOSApplicationExtension, unavailable)
-final class RecallApiRepository: ServiceBaseRepository {
-}
-
-@available(iOSApplicationExtension, unavailable)
-extension RecallApiRepository: RecallApiRepositoryType {
+final class RecallApiRepository: ServiceBaseRepository, RecallApiRepositoryType {
     
     func recall(failAPI: FailAPI, completion: @escaping (RecallApiResult) -> Void) {
         guard let api = api else { return }

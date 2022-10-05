@@ -16,7 +16,7 @@ enum WebPopupType {
         switch self {
         case .url(let popupData, let actionData):
             if let size = actionData.size, CGFloat(size.heightMobile) < Screen.height,
-                let position = popupData.popupPosition, position != "cc" {
+               let position = popupData.popupPosition, position != "cc" {
                 return CGFloat(size.heightMobile)
             } else {
                 return Screen.height - Screen.statusBarHeight

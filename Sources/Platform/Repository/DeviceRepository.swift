@@ -14,11 +14,7 @@ protocol DeviceRepositoryType {
 }
 
 @available(iOSApplicationExtension, unavailable)
-final class DeviceRepository: ServiceBaseRepository {
-}
-
-@available(iOSApplicationExtension, unavailable)
-extension DeviceRepository: DeviceRepositoryType {
+final class DeviceRepository: ServiceBaseRepository, DeviceRepositoryType {
     
     func saveDID(_ dID: String) {
         UserDefaultManager.set(value: dID, forKey: .dID)

@@ -1,6 +1,6 @@
 //
-//  SlideViewController.swift
-//  TestNotifyContent
+//  SliderViewController.swift
+//  
 //
 //  Created by Sun on 04/08/2022.
 //
@@ -8,12 +8,11 @@
 import UIKit
 import UserNotificationsUI
 
-class SlideViewController: UIViewController, NotificationContentViewControllerType {
+class SliderViewController: UIViewController, NotificationContentViewControllerType {
 
     // MARK: - Outlet
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var pageControl: UIPageControl!
-    @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
     
     // MARK: - Property
     var imageDataDictionary = [String: UIImage]()
@@ -30,9 +29,8 @@ class SlideViewController: UIViewController, NotificationContentViewControllerTy
     
     // MARK: - View
     private func setupView() {
-        let bundle = Bundle(identifier: "IOS.MobioSDKSwift")
-        let nib = UINib(nibName: "ImageCell", bundle: bundle)
-        collectionView.register(nib, forCellWithReuseIdentifier: "ImageCell")
+        let nib = UINib(nibName: ImageCell.nibName, bundle: AppInfo.mobioSDKBundle)
+        collectionView.register(nib, forCellWithReuseIdentifier: ImageCell.nibName)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
@@ -59,14 +57,14 @@ class SlideViewController: UIViewController, NotificationContentViewControllerTy
         }
     }
     
-    func downloadImage(from URLString: String) {
+    func downloadImage(from urlString: String) {
         group.enter()
-        guard let url = URL(string: URLString) else { return }
+        guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             guard let self = self else { return }
             if let data = data {
                 let image = UIImage(data: data)
-                self.imageDataDictionary[URLString] = image
+                self.imageDataDictionary[urlString] = image
                 self.group.leave()
             }
         }.resume()
@@ -81,12 +79,14 @@ class SlideViewController: UIViewController, NotificationContentViewControllerTy
     }
     
     func setupData() {
+        let activityIndicatorView = ActivityIndicatorView(frame: collectionView.bounds)
+        view.addSubview(activityIndicatorView)
         activityIndicatorView.startAnimating()
         downloadAllImage()
         group.notify(queue: .main) { [weak self] in
             guard let self = self else { return }
             self.setupDataWhenDownloadDone()
-            self.activityIndicatorView.stopAnimating()
+            activityIndicatorView.stopAnimating()
         }
     }
     
@@ -110,10 +110,10 @@ class SlideViewController: UIViewController, NotificationContentViewControllerTy
     }
 }
 
-extension SlideViewController: UICollectionViewDataSource {
+extension SliderViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.nibName, for: indexPath) as? ImageCell else { return UICollectionViewCell() }
         if imageDataDictionary.count != 0 {
             guard let sliderData = data as? Slider else { return UICollectionViewCell() }
             let imageStringItem = sliderData.imageStringArray[indexPath.row]
@@ -135,7 +135,7 @@ extension SlideViewController: UICollectionViewDataSource {
     }
 }
 
-extension SlideViewController: UICollectionViewDelegateFlowLayout {
+extension SliderViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -154,7 +154,7 @@ extension SlideViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension SlideViewController {
+extension SliderViewController {
     
     enum NotificationActionIdentifier: String {
         case backAction
@@ -179,7 +179,7 @@ extension SlideViewController {
         let tutorialCategory = UNNotificationCategory(identifier: "myNotificationCategory",
                                                       actions: [backAction, nextAction],
                                                       intentIdentifiers: [],
-                                                      options: [])
+                                                      options: [.customDismissAction])
         let center = UNUserNotificationCenter.current()
         center.setNotificationCategories([tutorialCategory])
     }

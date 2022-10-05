@@ -8,17 +8,13 @@
 import Foundation
 
 protocol NotificationRepositoryType {
-    func sendNotificationData(permission: String, token: String?)
+    func sendNotificationData(permission: String, token: String)
 }
 
 @available(iOSApplicationExtension, unavailable)
-final class NotificationRepository: ServiceBaseRepository {
-}
-
-@available(iOSApplicationExtension, unavailable)
-extension NotificationRepository: NotificationRepositoryType {
+final class NotificationRepository: ServiceBaseRepository, NotificationRepositoryType {
     
-    func sendNotificationData(permission: String, token: String?) {
+    func sendNotificationData(permission: String, token: String) {
         guard let api = api else { return }
         let input = NotificationRequest(permission: permission, token: token)
         api.request(input: input) { (object: NotificationResponse?, error) in

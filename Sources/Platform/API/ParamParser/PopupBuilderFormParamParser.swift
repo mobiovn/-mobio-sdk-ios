@@ -20,7 +20,7 @@ struct PopupBuilderFormParamParser {
         return fields
     }
     
-    static func createButton(actionData: PopupBuilderActionData, submitFormCase: SubmitFormCase) -> Button? {
+    static func createButton(actionData: PopupBuilderActionData) -> Button? {
         return actionData.button
     }
     
@@ -28,16 +28,16 @@ struct PopupBuilderFormParamParser {
         return actionData.tags
     }
     
-    static func createValue(popupData: PopupData, actionData: PopupBuilderActionData, submitFormCase: SubmitFormCase, actionTime: Int) -> Value {
+    static func createValue(popupData: PopupData, actionData: PopupBuilderActionData, actionTime: Int) -> Value {
         let inputFields = createInputFields(actionData: actionData)
-        let button = createButton(actionData: actionData, submitFormCase: submitFormCase)
+        let button = createButton(actionData: actionData)
         let tags = createTagArray(actionData: actionData)
         let journey = createJourney(popupData: popupData, actionTime: actionTime)
         return FormValue(journey: journey, button: button, tags: tags, inputFields: inputFields)
     }
     
     static func createBaseObject(popupData: PopupData, actionData: PopupBuilderActionData, submitFormCase: SubmitFormCase, actionTime: Int) -> BaseObject {
-        let value = createValue(popupData: popupData, actionData: actionData, submitFormCase: submitFormCase, actionTime: actionTime)
+        let value = createValue(popupData: popupData, actionData: actionData, actionTime: actionTime)
         let baseObject = BaseObject(object: submitFormCase.data.object, value: value)
         return baseObject
     }

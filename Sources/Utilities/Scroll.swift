@@ -32,6 +32,6 @@ extension Scroll: UIScrollViewDelegate {
             "direction": "vertical",
             "unit": "percent"
         ]
-        trackRepository.getTrackingData(event: "Scroll Event", properties: properties, type: .scroll)
+        trackRepository.getTrackingData(event: .scroll, properties: properties)
     }
 }

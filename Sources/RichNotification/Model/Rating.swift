@@ -11,10 +11,12 @@ struct Rating: NotificationContentDataType {
     let imageURL: String
     let emptyStarURL: String
     let fullStarURL: String
+    let ratingNumber: Int
     
     enum CodingKeys: String, CodingKey {
         case imageURL = "image_url"
         case emptyStarURL
         case fullStarURL
+        case ratingNumber
     }
 }

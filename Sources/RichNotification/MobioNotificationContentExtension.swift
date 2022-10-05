@@ -28,8 +28,9 @@ open class MobioNotificationContentExtension: UIViewController, UNNotificationCo
             viewController.data = countDownData
         }
         if let sliderData = data?.slider {
-            viewController = SlideViewController.instantiate()
+            viewController = SliderViewController.instantiate()
             viewController.data = sliderData
+            preferredContentSize.height = 300
         }
         if let inputData = data?.input {
             viewController = InputViewController.instantiate()
@@ -43,6 +44,7 @@ open class MobioNotificationContentExtension: UIViewController, UNNotificationCo
         viewController.view.frame = view.frame
         view.addSubview(viewController.view)
         didMove(toParent: self)
+        viewController.configureUserNotificationsCenter()
     }
     
     public func didReceive(_ response: UNNotificationResponse,

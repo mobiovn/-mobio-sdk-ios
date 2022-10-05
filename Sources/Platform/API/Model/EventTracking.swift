@@ -30,8 +30,7 @@ struct EventTracking {
     }
     
     init(type: String, eventPopup: EventPopup) {
-        let actionTime = eventPopup.eventData.actionTime
-        self.actionTime = actionTime
+        self.actionTime = eventPopup.eventData.actionTime
         let eventData = EventDataTracking(actionTime: actionTime)
         self.dynamic = [Dynamic(eventKey: eventPopup.eventKey, enventData: eventData, includedReport: true)]
         self.type = type

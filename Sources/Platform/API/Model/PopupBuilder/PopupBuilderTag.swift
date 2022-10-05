@@ -9,8 +9,9 @@ import Foundation
 
 struct PopupBuilderTag: Codable {
     let tagType: Int?
-    let tagName, tagID: String
-
+    let tagName: String
+    let tagID: String
+    
     enum CodingKeys: String, CodingKey {
         case tagType = "tag_type"
         case tagName = "tag_name"

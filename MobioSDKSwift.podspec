@@ -2,9 +2,9 @@
 Pod::Spec.new do |spec|
 
 
-  spec.name         = "MobioSDKSwift"
+  spec.name         = "MobioSDK"
   spec.version      = "0.0.1"
-  spec.summary      = "This is my CocoaPod of MobioSDKSwift."
+  spec.summary      = "This is my CocoaPod of MobioSDK."
 
   spec.description  = <<-DESC
                         This Cocoa pod help you tracking your app
@@ -15,10 +15,9 @@ Pod::Spec.new do |spec|
 
   spec.license      = "MIT"
 
+  spec.author             = { "mobio" => "linhtn@mobio.io" }
 
-  spec.author             = { "cuongvx" => "cuongvx@mobio.io" }
-
-  spec.ios.deployment_target = "12.0"
+  spec.ios.deployment_target = "14.0"
 
   spec.swift_version = "5.0"
 
@@ -26,10 +25,10 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://gitbucket.mobio.vn/git/SDK_APP/ios_swift_lib.git", :tag => "#{spec.version}" }
 
 
-  spec.source_files = "Source/**/**/*.{swift,xib,xcdatamodeld}"
-  spec.resources = ['*.{xib}']
-  spec.resources = 'Source/CoreData/DataBase/*.xcdatamodeld'
+  spec.source_files = "Sources/**/**/*.{swift,xib,xcdatamodeld}"
+  spec.resources = ['*.{xib, .xcassets}']
+  spec.resources = 'Sources/Resource/*.xcassets'
 
-  spec.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER': 'IOS.MobioSDKSwift' }
+  spec.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER': 'IOS.MobioSDK' }
 
 end
